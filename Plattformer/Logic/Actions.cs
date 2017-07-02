@@ -33,7 +33,19 @@ namespace Plattformer.Logic
             Action task = () =>
             {
                 LoadRessources(false);
+                Control.InputManager.StartWatchdog();
                 OpenMenu(false);
+            };
+            if (async) new Task(task).Start();
+            else task();
+        }
+
+        public static void Cleanup(bool async = true)
+        {
+            Action task = () =>
+            {
+                Control.InputManager.StopWatchdog();
+                UI.UIManager.Dispose();
             };
             if (async) new Task(task).Start();
             else task();

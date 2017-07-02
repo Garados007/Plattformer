@@ -32,6 +32,16 @@ namespace Plattformer.UI
             }
         }
 
+        public static void Dispose()
+        {
+            for (int i = 0; i < Layers.Count; ++i)
+            {
+                var l = Layers.ElementAt(i).Value;
+                for (int j = 0; j < l.Count; ++j)
+                    l[j].Dispose();
+            }
+        }
+
         public static void Render(Graphics g, SizeF displaySize)
         {
             if (Layers.ContainsKey(CurrentRenderState))
