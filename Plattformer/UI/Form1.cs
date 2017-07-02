@@ -59,7 +59,12 @@ namespace Plattformer.UI
                 var start = Environment.TickCount;
                 SetupBuffer();
                 RenderFunction();
-                Buffer.Render();
+                try { Buffer.Render(); }
+                catch
+                {
+                    if (Disposing || IsDisposed) break;
+                    throw;
+                }
                 var finished = Environment.TickCount;
                 var time = 40 - ((finished - start) % 40);
                 Thread.Sleep(time);
