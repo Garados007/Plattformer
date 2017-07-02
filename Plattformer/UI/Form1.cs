@@ -34,6 +34,7 @@ namespace Plattformer.UI
             renderThread = new Thread(RenderLoop);
             renderThread.Name = "Render Thread of UI";
             renderThread.Start();
+            Logic.Actions.Startup();
         }
 
         void SetupBuffer()

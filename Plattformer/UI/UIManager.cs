@@ -11,13 +11,13 @@ namespace Plattformer.UI
     {
         private static Dictionary<RenderState, List<RenderLayer>> Layers = new Dictionary<RenderState, List<RenderLayer>>();
 
-        public static RenderState CurrentRenderState = RenderState.Menu;
+        public static RenderState CurrentRenderState = RenderState.LoadingScreen;
 
         static UIManager()
         {
             Layers.Add(RenderState.Menu, new List<RenderLayer>(new RenderLayer[]
             {
-
+                new RenderMenuBackground(),
             }));
         }
 
