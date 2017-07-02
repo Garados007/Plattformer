@@ -19,6 +19,9 @@ namespace Plattformer.UI
             {
                 new RenderMenuBackground(),
                 new RenderMenu(),
+#if DEBUG
+                new Debug_ShowInputAxis(),
+#endif
             }));
         }
 

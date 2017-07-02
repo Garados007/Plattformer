@@ -52,18 +52,23 @@ namespace Plattformer.UI
             base.OnResize(e);
         }
 
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+            Logic.Actions.Cleanup();
+        }
+
         void RenderLoop()
         {
             while (!Disposing && !IsDisposed)
             {
                 var start = Environment.TickCount;
                 SetupBuffer();
-                RenderFunction();
-#if DEBUG
-                if (MonitorFPS)
-                    DrawMonitorFPS(Buffer.Graphics, Environment.TickCount - start, 0, 60, 1, LastViewSize.Width);
-#endif
-                try { Buffer.Render(); }
+                try
+                {
+                    RenderFunction();
+                    Buffer.Render();
+                }
                 catch
                 {
                     if (Disposing || IsDisposed) break;
@@ -77,7 +82,12 @@ namespace Plattformer.UI
 
         void RenderFunction()
         {
+            var start = Environment.TickCount;
             UIManager.Render(Buffer.Graphics, LastViewSize);
+#if DEBUG
+                if (MonitorFPS)
+                    DrawMonitorFPS(Buffer.Graphics, Environment.TickCount - start, 0, 60, 1, LastViewSize.Width);
+#endif
         }
 
         public void ToggleFullscreen()
@@ -103,10 +113,17 @@ namespace Plattformer.UI
             {
                 ToggleFullscreen();
             }
-            if (e.KeyCode == Keys.Escape)
+            else if (e.KeyCode == Keys.Escape)
             {
                 Close();
             }
+            else Control.FormInputFilter.OnKeyDown(e.KeyCode);
+        }
+
+        protected override void OnKeyUp(KeyEventArgs e)
+        {
+            base.OnKeyUp(e);
+            Control.FormInputFilter.OnKeyUp(e.KeyCode);
         }
 
 #if DEBUG
