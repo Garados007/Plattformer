@@ -25,15 +25,15 @@ namespace Plattformer.UI
             };
         }
 
-        public override void Render(Graphics g, Size displaySize)
+        public override void Render(Graphics g, SizeF displaySize)
         {
             base.Render(g, displaySize);
             int time = Environment.TickCount;
             const int frameloop = 600;
             const float bgloop = 10 * frameloop;
             float bgOffset = -(time % bgloop) / bgloop;
-            var bgw = (float)Background.Width * displaySize.Height / Background.Height;
-            for (float x = bgOffset * bgw; x<displaySize.Width; x+=bgw)
+            var bgw = (float)Background.Width * displaySize.Height / Background.Height - 1;
+            for (float x = bgOffset * bgw; x < displaySize.Width; x += bgw * 0.99f) //the 0.99f fix the moving black line
                 g.DrawImage(Background, x, 0, bgw, displaySize.Height);
             int frame = (time % frameloop) * Player.Length / frameloop;
             var tw = bgw * 0.1f;

@@ -18,6 +18,7 @@ namespace Plattformer.UI
             Layers.Add(RenderState.Menu, new List<RenderLayer>(new RenderLayer[]
             {
                 new RenderMenuBackground(),
+                new RenderMenu(),
             }));
         }
 
@@ -31,7 +32,7 @@ namespace Plattformer.UI
             }
         }
 
-        public static void Render(Graphics g, Size displaySize)
+        public static void Render(Graphics g, SizeF displaySize)
         {
             if (Layers.ContainsKey(CurrentRenderState))
             {
@@ -51,14 +52,18 @@ namespace Plattformer.UI
         Game
     }
 
-    public class RenderLayer
+    public class RenderLayer : IDisposable
     {
+        public virtual void Dispose()
+        {
+        }
+
         public virtual void LoadRessources()
         {
 
         }
 
-        public virtual void Render(Graphics g, Size displaySize)
+        public virtual void Render(Graphics g, SizeF displaySize)
         {
 
         }
