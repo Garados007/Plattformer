@@ -103,6 +103,10 @@ namespace Plattformer.UI
             {
                 ToggleFullscreen();
             }
+            if (e.KeyCode == Keys.Escape)
+            {
+                Close();
+            }
         }
 
 #if DEBUG
