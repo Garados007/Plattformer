@@ -16,9 +16,14 @@ namespace Plattformer.UI
         BufferedGraphics Buffer;
         Size LastViewSize;
         Graphics FormGraphics;
+        public bool IsFullScreen { get; private set; }
+        Rectangle windowBounds;
+        FormBorderStyle windowBorder;
+
 
         public Form1()
         {
+            IsFullScreen = false;
             InitializeComponent();
             this.Load += Form1_Load;
         }
@@ -63,6 +68,31 @@ namespace Plattformer.UI
         void RenderFunction()
         {
 
+        }
+
+        public void ToggleFullscreen()
+        {
+            if (IsFullScreen = !IsFullScreen)
+            {
+                windowBounds = Bounds;
+                windowBorder = this.FormBorderStyle;
+                this.FormBorderStyle = FormBorderStyle.None;
+                this.Bounds = Screen.FromRectangle(Bounds).Bounds;
+            }
+            else
+            {
+                Bounds = windowBounds;
+                FormBorderStyle = windowBorder;
+            }
+        }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+            if (e.KeyCode == Keys.F11)
+            {
+                ToggleFullscreen();
+            }
         }
     }
 }
