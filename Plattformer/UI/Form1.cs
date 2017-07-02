@@ -67,7 +67,7 @@ namespace Plattformer.UI
 
         void RenderFunction()
         {
-
+            UIManager.Render(Buffer.Graphics, LastViewSize);
         }
 
         public void ToggleFullscreen()
