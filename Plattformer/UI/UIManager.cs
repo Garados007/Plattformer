@@ -21,6 +21,16 @@ namespace Plattformer.UI
             }));
         }
 
+        public static void LoadRessources()
+        {
+            for (int i = 0; i<Layers.Count; ++i)
+            {
+                var l = Layers.ElementAt(i).Value;
+                for (int j = 0; j < l.Count; ++j)
+                    l[j].LoadRessources();
+            }
+        }
+
         public static void Render(Graphics g, Size displaySize)
         {
             if (Layers.ContainsKey(CurrentRenderState))
@@ -43,6 +53,11 @@ namespace Plattformer.UI
 
     public class RenderLayer
     {
+        public virtual void LoadRessources()
+        {
+
+        }
+
         public virtual void Render(Graphics g, Size displaySize)
         {
 

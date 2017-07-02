@@ -53,6 +53,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\RenderMenuBackground.cs" />
     <Compile Include="UI\UIManager.cs" />
     <EmbeddedResource Include="UI\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -65,6 +66,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -78,6 +80,45 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\player.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\player_fall_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\player_fall_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\player_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\player_left2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\player_left3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\player_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\player_right2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\player_right3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image-Tileset.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bg.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\spinning_coin_gold.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\heart.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
