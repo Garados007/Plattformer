@@ -68,11 +68,11 @@ namespace Plattformer.Control
                     return true;
                 case Keys.Q:
                 case Keys.Enter:
-                    axis = InputAxis.Pick;
+                    axis = InputAxis.Activate;
                     return true;
                 case Keys.E:
                 case Keys.ControlKey:
-                    axis = InputAxis.Activate;
+                    axis = InputAxis.Pick;
                     return true;
                 default: return false;
             }
