@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Control\FormInputFilter.cs" />
     <Compile Include="Control\InputManager.cs" />
+    <Compile Include="Control\MenuInputController.cs" />
     <Compile Include="Logic\Actions.cs" />
     <Compile Include="UI\Debug_ShowInputAxis.cs" />
     <Compile Include="UI\Form1.cs">

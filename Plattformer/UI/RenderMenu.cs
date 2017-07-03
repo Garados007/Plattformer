@@ -4,20 +4,39 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Plattformer.Control;
 
 namespace Plattformer.UI
 {
     public class RenderMenu : RenderLayer
     {
         RenderMenuButton[] buttons;
+        public RenderMenuButton[] Buttons => buttons;
 
-        public RenderMenu()
+        public ActiveInputLayout InputLayout { get; private set; }
+
+        public RenderMenu(ActiveInputLayout inputLayout)
         {
-            buttons = new RenderMenuButton[]
+            this.InputLayout = inputLayout;
+            switch (inputLayout)
             {
-                new RenderMenuButton("Test-Button 1"),
-                new RenderMenuButton("Test-Button 2"),
-            };
+                case ActiveInputLayout.MainMenu:
+                    buttons = new RenderMenuButton[]
+                    {
+                        new RenderMenuButton("Spiel starten"),
+                        new RenderMenuButton("Optionen"),
+                        new RenderMenuButton("Spiel beenden", () => Logic.Actions.CloseApp()),
+                    };
+                    break;
+            }
+            var effects = MenuInputController.Layouts[inputLayout].Effects;
+            for (int i = 0; i < buttons.Length; ++i)
+            {
+                effects.Add(
+                    new InputObjectEffect(buttons[i])
+                    .AddAction(InputAxis.vertMovement, PressState.PositivePressed, buttons[(i + buttons.Length - 1) % buttons.Length])
+                    .AddAction(InputAxis.vertMovement, PressState.NegativePressed, buttons[(i + 1) % buttons.Length]));
+            }
         }
 
         public override void LoadRessources()
@@ -51,7 +70,7 @@ namespace Plattformer.UI
         }
     }
     
-    public class RenderMenuButton : RenderLayer
+    public class RenderMenuButton : RenderLayer, Control.IInputObject
     {
         public string Text { get; private set; }
 
@@ -69,13 +88,15 @@ namespace Plattformer.UI
         }
 
         Font font;
-        Brush normalBackground;
+        Brush normalBackground, activeBackground;
+        bool active = false;
 
         public override void LoadRessources()
         {
             base.LoadRessources();
             font = new Font(FontFamily.GenericSansSerif, 12);
             normalBackground = new SolidBrush(Color.FromArgb(0x80, Color.Black));
+            activeBackground = new SolidBrush(Color.FromArgb(0x80, Color.Yellow));
         }
 
         public override void Dispose()
@@ -88,10 +109,25 @@ namespace Plattformer.UI
         public override void Render(Graphics g, SizeF displaySize)
         {
             base.Render(g, displaySize);
-            g.FillRectangle(normalBackground, 0, 0, displaySize.Width, displaySize.Height);
+            g.FillRectangle(active ? activeBackground : normalBackground, 0, 0, displaySize.Width, displaySize.Height);
             if (Text == null) return;
             var fsize = g.MeasureString(Text, font);
             g.DrawString(Text, font, Brushes.Black, (displaySize.Width - fsize.Width) / 2, (displaySize.Height - fsize.Height) / 2);
+        }
+
+        public void EnterFocus()
+        {
+            active = true;
+        }
+
+        public void LeaveFocus()
+        {
+            active = false;
+        }
+
+        public void Click()
+        {
+            OnClick?.Invoke();
         }
     }
 }

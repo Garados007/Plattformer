@@ -118,4 +118,43 @@ namespace Plattformer.Control
         PositivePressed,
         NegativePressed,
     }
+
+    public class InputType
+    {
+        public InputAxis Axis { get; private set; }
+
+        public PressState State { get; private set; }
+
+        public InputType(InputAxis axis, PressState state)
+        {
+            this.Axis = axis;
+            this.State = state;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is InputType)) return false;
+            return this == ((InputType)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return Axis.GetHashCode() ^ State.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0} - {1}", Axis, State);
+        }
+
+        public static bool operator ==(InputType t1, InputType t2)
+        {
+            return t1.Axis == t2.Axis && t1.State == t2.State;
+        }
+
+        public static bool operator !=(InputType t1, InputType t2)
+        {
+            return t1.Axis != t2.Axis || t1.State != t2.State;
+        }
+    }
 }

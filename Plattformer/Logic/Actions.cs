@@ -34,18 +34,42 @@ namespace Plattformer.Logic
             {
                 LoadRessources(false);
                 Control.InputManager.StartWatchdog();
+                Control.MenuInputController.StartWatchdog();
+                SetInputLayout(Control.ActiveInputLayout.MainMenu, false);
                 OpenMenu(false);
             };
             if (async) new Task(task).Start();
             else task();
         }
-
+        
         public static void Cleanup(bool async = true)
         {
             Action task = () =>
             {
                 Control.InputManager.StopWatchdog();
+                Control.MenuInputController.StopWatchdog();
                 UI.UIManager.Dispose();
+            };
+            if (async) new Task(task).Start();
+            else task();
+        }
+
+        public static void CloseApp(bool async = true)
+        {
+            Action task = () =>
+            {
+                var form = System.Windows.Forms.Form.ActiveForm;
+                form.Invoke(new Action(form.Close));
+            };
+            if (async) new Task(task).Start();
+            else task();
+        }
+
+        public static void SetInputLayout(Control.ActiveInputLayout layout, bool async = true)
+        {
+            Action task = () =>
+            {
+                Control.MenuInputController.CurrentLayout = layout;
             };
             if (async) new Task(task).Start();
             else task();

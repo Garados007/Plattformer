@@ -18,7 +18,7 @@ namespace Plattformer.UI
             Layers.Add(RenderState.Menu, new List<RenderLayer>(new RenderLayer[]
             {
                 new RenderMenuBackground(),
-                new RenderMenu(),
+                new RenderMenu(Control.ActiveInputLayout.MainMenu),
 #if DEBUG
                 new Debug_ShowInputAxis(),
 #endif
