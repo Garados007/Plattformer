@@ -84,6 +84,7 @@ namespace Plattformer.Control
                     var key = actionAxis.ElementAt(i).Key;
                     var cur = GetState(key);
                     var last = lastAxisState.ElementAt(i).Value;
+                    lastAxisState[key] = cur;
                     if (cur != last)
                         axisLastChange[key] = time;
                 }
@@ -149,11 +150,19 @@ namespace Plattformer.Control
 
         public static bool operator ==(InputType t1, InputType t2)
         {
+            var t1n = ((object)t1) == null;
+            var t2n = ((object)t2) == null;
+            if (t1n && t2n) return true;
+            if (t1n || t2n) return false;
             return t1.Axis == t2.Axis && t1.State == t2.State;
         }
 
         public static bool operator !=(InputType t1, InputType t2)
         {
+            var t1n = ((object)t1) == null;
+            var t2n = ((object)t2) == null;
+            if (t1n && t2n) return false;
+            if (t1n || t2n) return true;
             return t1.Axis != t2.Axis || t1.State != t2.State;
         }
     }

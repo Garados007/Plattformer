@@ -64,6 +64,8 @@ namespace Plattformer.Control
             Effects = effects.ToList();
         }
 
+        InputType LastUsedInput = null;
+
         public void PerformInputAction()
         {
             if (Current == null)
@@ -102,23 +104,42 @@ namespace Plattformer.Control
                     actives.Clear();
                     actives.Add(result);
                 }
-                //set next element
-                var obj = Current.Actions[actives[0]];
-                var eff = Effects.Find((e) => e.InputObject == obj);
-                if (eff != null)
+                //filter input
+                var enableInput = true;
+                if (actives[0] == LastUsedInput)
                 {
-                    Current.InputObject.LeaveFocus();
-                    Current = eff;
-                    Current.InputObject.EnterFocus();
+                    var time = InputManager.GetActionLastChanged(actives[0].Axis);
+                    var dif = Environment.TickCount - time;
+                    if (dif < 700)
+                        enableInput = false;
+                }
+                LastUsedInput = actives[0];
+                //set next element
+                if (enableInput)
+                {
+                    var obj = Current.Actions[actives[0]];
+                    var eff = Effects.Find((e) => e.InputObject == obj);
+                    if (eff != null)
+                    {
+                        Current.InputObject.LeaveFocus();
+                        Current = eff;
+                        Current.InputObject.EnterFocus();
+                    }
                 }
             }
             else
             {
                 //check onclick
+                var inpType = new InputType(InputAxis.Activate, PressState.PositivePressed);
                 if (InputManager.GetPressed(InputAxis.Activate))
                 {
-                    Current.InputObject.Click();
+                    if (LastUsedInput != inpType)
+                    {
+                        Current.InputObject.Click();
+                        LastUsedInput = inpType;
+                    }
                 }
+                else LastUsedInput = null;
             }
         }
     }
