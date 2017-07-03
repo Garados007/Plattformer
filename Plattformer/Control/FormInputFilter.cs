@@ -9,15 +9,15 @@ namespace Plattformer.Control
 {
     public static class FormInputFilter
     {
-        static List<Tuple<ActionEvent, PressState>> pressedButtons = new List<Tuple<ActionEvent, PressState>>();
+        static List<Tuple<InputAxis, PressState>> pressedButtons = new List<Tuple<InputAxis, PressState>>();
 
         public static void OnKeyDown(Keys key)
         {
-            ActionEvent axis;
+            InputAxis axis;
             PressState direction;
             if (!GetAxis(key, out axis, out direction)) return;
             if (IsPressed(axis, direction)) return;
-            pressedButtons.Add(new Tuple<ActionEvent, PressState>(axis, direction));
+            pressedButtons.Add(new Tuple<InputAxis, PressState>(axis, direction));
             var opdir = direction == PressState.PositivePressed ? PressState.NegativePressed :
                 direction == PressState.NegativePressed ? PressState.PositivePressed : PressState.None;
             var opposite = IsPressed(axis, opdir);
@@ -26,7 +26,7 @@ namespace Plattformer.Control
 
         public static void OnKeyUp(Keys key)
         {
-            ActionEvent axis;
+            InputAxis axis;
             PressState direction;
             if (!GetAxis(key, out axis, out direction)) return;
             if (!IsPressed(axis, direction)) return;
@@ -37,48 +37,48 @@ namespace Plattformer.Control
             InputManager.SetAction(axis, opposite ? opdir : PressState.None);
         }
 
-        static bool GetAxis(Keys key, out ActionEvent axis, out PressState direction)
+        static bool GetAxis(Keys key, out InputAxis axis, out PressState direction)
         {
-            axis = ActionEvent.Pick;
+            axis = InputAxis.Pick;
             direction = PressState.PositivePressed;
             switch (key)
             {
                 case Keys.W:
                 case Keys.Up:
-                    axis = ActionEvent.vertMovement;
+                    axis = InputAxis.vertMovement;
                     direction = PressState.PositivePressed;
                     return true;
                 case Keys.A:
                 case Keys.Left:
-                    axis = ActionEvent.horzMovement;
+                    axis = InputAxis.horzMovement;
                     direction = PressState.NegativePressed;
                     return true;
                 case Keys.S:
                 case Keys.Down:
-                    axis = ActionEvent.vertMovement;
+                    axis = InputAxis.vertMovement;
                     direction = PressState.NegativePressed;
                     return true;
                 case Keys.D:
                 case Keys.Right:
-                    axis = ActionEvent.horzMovement;
+                    axis = InputAxis.horzMovement;
                     direction = PressState.PositivePressed;
                     return true;
                 case Keys.Space:
-                    axis = ActionEvent.Jump;
+                    axis = InputAxis.Jump;
                     return true;
                 case Keys.Q:
                 case Keys.Enter:
-                    axis = ActionEvent.Pick;
+                    axis = InputAxis.Pick;
                     return true;
                 case Keys.E:
                 case Keys.ControlKey:
-                    axis = ActionEvent.Activate;
+                    axis = InputAxis.Activate;
                     return true;
                 default: return false;
             }
         }
 
-        static bool IsPressed(ActionEvent axis, PressState direction)
+        static bool IsPressed(InputAxis axis, PressState direction)
         {
             for (int i = 0; i<pressedButtons.Count; ++i)
             {
@@ -88,7 +88,7 @@ namespace Plattformer.Control
             return false;
         }
 
-        static void RemovePressed(ActionEvent axis, PressState direction)
+        static void RemovePressed(InputAxis axis, PressState direction)
         {
 
             for (int i = 0; i < pressedButtons.Count; ++i)

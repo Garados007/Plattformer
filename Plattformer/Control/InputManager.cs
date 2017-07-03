@@ -8,16 +8,16 @@ namespace Plattformer.Control
 {
     public static class InputManager
     {
-        static Dictionary<ActionEvent, float> actionAxis = new Dictionary<ActionEvent, float>();
-        static Dictionary<ActionEvent, PressState> lastAxisState = new Dictionary<ActionEvent, PressState>();
-        static Dictionary<ActionEvent, int> axisLastChange = new Dictionary<ActionEvent, int>();
+        static Dictionary<InputAxis, float> actionAxis = new Dictionary<InputAxis, float>();
+        static Dictionary<InputAxis, PressState> lastAxisState = new Dictionary<InputAxis, PressState>();
+        static Dictionary<InputAxis, int> axisLastChange = new Dictionary<InputAxis, int>();
         static Thread Watchdog;
         static bool watchdogEnabled;
 
         static InputManager()
         {
             var time = Environment.TickCount;
-            foreach (ActionEvent action in Enum.GetValues(typeof(ActionEvent)))
+            foreach (InputAxis action in Enum.GetValues(typeof(InputAxis)))
             {
                 actionAxis.Add(action, 0);
                 lastAxisState.Add(action, PressState.None);
@@ -27,12 +27,12 @@ namespace Plattformer.Control
 
         public static float Epsilon = 0.1f;
 
-        public static bool GetPressed(ActionEvent action)
+        public static bool GetPressed(InputAxis action)
         {
             return Math.Abs(actionAxis[action]) >= Epsilon;
         }
 
-        public static PressState GetState(ActionEvent action)
+        public static PressState GetState(InputAxis action)
         {
             var value = actionAxis[action];
             if (value <= -Epsilon) return PressState.NegativePressed;
@@ -40,27 +40,27 @@ namespace Plattformer.Control
             return PressState.None;
         }
 
-        public static float GetAxisValue(ActionEvent action)
+        public static float GetAxisValue(InputAxis action)
         {
             return actionAxis[action];
         }
 
-        public static void SetAction(ActionEvent action, bool pressed)
+        public static void SetAction(InputAxis action, bool pressed)
         {
             actionAxis[action] = pressed ? 1 : 0;
         }
 
-        public static void SetAction(ActionEvent action, PressState state)
+        public static void SetAction(InputAxis action, PressState state)
         {
             actionAxis[action] = state == PressState.NegativePressed ? -1 : state == PressState.PositivePressed ? 1 : 0;
         }
 
-        public static void SetAction(ActionEvent action, float value)
+        public static void SetAction(InputAxis action, float value)
         {
             actionAxis[action] = Math.Max(-1, Math.Min(1, value));
          }
 
-        public static int GetActionLastChanged(ActionEvent action)
+        public static int GetActionLastChanged(InputAxis action)
         {
             return axisLastChange[action];
         }
@@ -97,7 +97,7 @@ namespace Plattformer.Control
         }
     }
 
-    public enum ActionEvent
+    public enum InputAxis
     {
         /// <summary>
         /// [-] down, [+] up

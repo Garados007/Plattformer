@@ -11,13 +11,13 @@ namespace Plattformer.UI
     public class Debug_ShowInputAxis : RenderLayer
     {
         Font font;
-        Control.ActionEvent[] actions;
+        Control.InputAxis[] actions;
 
         public override void LoadRessources()
         {
             base.LoadRessources();
             font = new Font(FontFamily.GenericSansSerif, 10);
-            actions = (Control.ActionEvent[])Enum.GetValues(typeof(Control.ActionEvent));
+            actions = (Control.InputAxis[])Enum.GetValues(typeof(Control.InputAxis));
         }
 
         public override void Dispose()
