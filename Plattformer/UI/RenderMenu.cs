@@ -112,7 +112,12 @@ namespace Plattformer.UI
             g.FillRectangle(active ? activeBackground : normalBackground, 0, 0, displaySize.Width, displaySize.Height);
             if (Text == null) return;
             var fsize = g.MeasureString(Text, font);
-            g.DrawString(Text, font, Brushes.Black, (displaySize.Width - fsize.Width) / 2, (displaySize.Height - fsize.Height) / 2);
+            var t = g.Transform;
+            g.TranslateTransform(displaySize.Width / 2, displaySize.Height / 2);
+            var scale = displaySize.Height * 0.5f / fsize.Height;
+            g.ScaleTransform(scale, scale);
+            g.DrawString(Text, font, Brushes.Black, - fsize.Width / 2, - fsize.Height / 2);
+            g.Transform = t;
         }
 
         public void EnterFocus()
