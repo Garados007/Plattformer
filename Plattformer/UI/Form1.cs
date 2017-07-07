@@ -72,7 +72,9 @@ namespace Plattformer.UI
                 catch
                 {
                     if (Disposing || IsDisposed) break;
+#if DEBUG
                     throw;
+#endif
                 }
                 var finished = Environment.TickCount;
                 var time = 40 - ((finished - start) % 40);
