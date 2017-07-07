@@ -62,7 +62,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\LevelRenderer.cs" />
+    <Compile Include="UI\Level\LevelBackground.cs" />
+    <Compile Include="UI\Level\LevelRendererBase.cs" />
+    <Compile Include="UI\Level\VanillaLevelRenderer.cs" />
     <Compile Include="UI\RenderMenu.cs" />
     <Compile Include="UI\RenderMenuBackground.cs" />
     <Compile Include="UI\UIManager.cs" />

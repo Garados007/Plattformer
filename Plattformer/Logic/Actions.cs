@@ -18,6 +18,27 @@ namespace Plattformer.Logic
             else task();
         }
 
+        public static void OpenGame(bool async = true)
+        {
+            Action task = () =>
+            {
+                UI.UIManager.CurrentRenderState = UI.RenderState.Game;
+            };
+            if (async) new Task(task).Start();
+            else task();
+        }
+
+        public static void SetLevel(Level.LevelContainer level, bool async = true)
+        {
+            Action task = () =>
+            {
+                var renderer = UI.UIManager.GetLayer<UI.Level.LevelRendererBase>(UI.RenderState.Game, "LevelRenderer");
+                if (renderer != null) renderer.Level = level;
+            };
+            if (async) new Task(task).Start();
+            else task();
+        }
+
         public static void LoadRessources(bool async = true)
         {
             Action task = () =>

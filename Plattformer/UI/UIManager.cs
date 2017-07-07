@@ -23,6 +23,21 @@ namespace Plattformer.UI
                 new Debug_ShowInputAxis(),
 #endif
             }));
+            Layers.Add(RenderState.Game, new List<RenderLayer>(new RenderLayer[]
+            {
+                new Level.LevelBackground(),
+                new Level.VanillaLevelRenderer() { AccessKey = "LevelRenderer"},
+#if DEBUG
+                new Debug_ShowInputAxis(),
+#endif
+            }));
+        }
+
+        public static T GetLayer<T>(RenderState state, string key) where T : RenderLayer
+        {
+            if (!Layers.ContainsKey(state)) return null;
+            var layer = Layers[state].Find((rl) => rl.AccessKey == key);
+            return layer as T;
         }
 
         public static void LoadRessources()
@@ -67,6 +82,8 @@ namespace Plattformer.UI
 
     public class RenderLayer : IDisposable
     {
+        public string AccessKey { get; set; }
+
         public virtual void Dispose()
         {
         }

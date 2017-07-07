@@ -23,7 +23,12 @@ namespace Plattformer.UI
                 case ActiveInputLayout.MainMenu:
                     buttons = new RenderMenuButton[]
                     {
-                        new RenderMenuButton("Spiel starten"),
+                        new RenderMenuButton("Spiel starten", () => {
+                            var level = new Plattformer.Level.LevelContainer();
+                            level.SetDimension(30, 20);
+                            Logic.Actions.SetLevel(level, false);
+                            Logic.Actions.OpenGame();
+                        }),
                         new RenderMenuButton("Optionen"),
                         new RenderMenuButton("Spiel beenden", () => Logic.Actions.CloseApp()),
                     };
