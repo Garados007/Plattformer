@@ -33,37 +33,29 @@ namespace Plattformer.Control
 
         static void watchdogTask()
         {
+            int lastTick = Environment.TickCount;
             while (enablewatchdog)
             {
                 if (EnableInput)
                 {
+                    int tick = Environment.TickCount;
+                    int tickDif = tick - lastTick;
+                    lastTick = tick;
                     PressState state;
 #if DEBUG
-                    if ((state = getPressFiltered(InputAxis.Debug_Zoom)) != PressState.None)
+                    var camera = Level?.Camera;
+                    if ((state = getPressFiltered(InputAxis.Debug_Zoom)) != PressState.None && camera != null)
                     {
-                        var camera = Level?.Camera;
-                        if (camera != null)
-                            try
-                            {
-                                if (state == PressState.PositivePressed)
-                                    camera.Distance *= 2;
-                                else camera.Distance *= 0.5f;
-                            }
-                            catch (ArgumentOutOfRangeException) { }
+                        try
+                        {
+                            if (state == PressState.PositivePressed)
+                                camera.Distance *= 2;
+                            else camera.Distance *= 0.5f;
+                        }
+                        catch (ArgumentOutOfRangeException) { }
                     }
-                    if ((state = getPressFiltered(InputAxis.horzMovement)) != PressState.None)
-                    {
-                        var camera = Level?.Camera;
-                        if (camera != null)
-                            camera.X += state == PressState.PositivePressed ? 1 : -1;
-                    }
-                    if ((state = getPressFiltered(InputAxis.vertMovement)) != PressState.None)
-                    {
-                        var camera = Level?.Camera;
-                        if (camera != null)
-                            camera.Y += state == PressState.PositivePressed ? 1 : -1;
-
-                    }
+                    camera.X += InputManager.GetAxisValue(InputAxis.horzMovement) * tickDif * 0.001f * 5;
+                    camera.Y += InputManager.GetAxisValue(InputAxis.vertMovement) * tickDif * 0.001f * 5;
 #endif
                 }
 
