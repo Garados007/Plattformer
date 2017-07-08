@@ -111,6 +111,9 @@ namespace Plattformer.Control
         Jump,
         Pick,
         Activate,
+#if DEBUG
+        Debug_Zoom,
+#endif
     }
 
     public enum PressState

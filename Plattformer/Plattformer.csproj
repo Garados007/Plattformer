@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Control\FormInputFilter.cs" />
     <Compile Include="Control\InputManager.cs" />
+    <Compile Include="Control\LevelInputController.cs" />
     <Compile Include="Control\MenuInputController.cs" />
     <Compile Include="Level\Camera.cs" />
     <Compile Include="Level\LevelCell.cs" />

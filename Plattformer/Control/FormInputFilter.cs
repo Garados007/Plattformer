@@ -74,6 +74,16 @@ namespace Plattformer.Control
                 case Keys.ControlKey:
                     axis = InputAxis.Pick;
                     return true;
+#if DEBUG
+                case Keys.PageDown:
+                    axis = InputAxis.Debug_Zoom;
+                    direction = PressState.NegativePressed;
+                    return true;
+                case Keys.PageUp:
+                    axis = InputAxis.Debug_Zoom;
+                    direction = PressState.PositivePressed;
+                    return true;
+#endif
                 default: return false;
             }
         }
