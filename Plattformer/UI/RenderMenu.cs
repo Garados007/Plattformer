@@ -24,9 +24,17 @@ namespace Plattformer.UI
                     buttons = new RenderMenuButton[]
                     {
                         new RenderMenuButton("Spiel starten", () => {
+#if DEBUG
+                            Logic.Actions.SetLevel(Plattformer.Level.LevelFactory.CreateTestLevel(new Plattformer.Level.LevelCreationParam()
+                            {
+                                Width = 30,
+                                Height = 20
+                            }));
+#else
                             var level = new Plattformer.Level.LevelContainer();
                             level.SetDimension(30, 20);
                             Logic.Actions.SetLevel(level, false);
+#endif
                             Logic.Actions.OpenGame();
                         }),
                         new RenderMenuButton("Optionen"),

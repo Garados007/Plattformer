@@ -50,8 +50,11 @@
     <Compile Include="Control\LevelInputController.cs" />
     <Compile Include="Control\MenuInputController.cs" />
     <Compile Include="Level\Camera.cs" />
+    <Compile Include="Level\Debug_TestLevelCreator.cs" />
     <Compile Include="Level\LevelCell.cs" />
     <Compile Include="Level\LevelContainer.cs" />
+    <Compile Include="Level\LevelCreator.cs" />
+    <Compile Include="Level\LevelFactory.cs" />
     <Compile Include="Level\Sprite.cs" />
     <Compile Include="Logic\Actions.cs" />
     <Compile Include="UI\Debug_ShowInputAxis.cs" />
