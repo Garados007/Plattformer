@@ -27,7 +27,9 @@ namespace Plattformer.Level
         public void SetDimension(int width, int height)
         {
             var cells = new LevelCell[width, height];
-            cells.Initialize();
+            for (int x = 0; x < width; ++x)
+                for (int y = 0; y < height; ++y)
+                    cells[x, y] = new LevelCell();
             if (Cells != null)
             {
                 int w = Math.Min(width, Width), h = Math.Min(height, Height);
