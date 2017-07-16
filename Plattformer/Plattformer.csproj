@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Control\FormInputFilter.cs" />
+    <Compile Include="Control\GamePadController.cs" />
     <Compile Include="Control\InputManager.cs" />
     <Compile Include="Control\LevelInputController.cs" />
     <Compile Include="Control\MenuInputController.cs" />

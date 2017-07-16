@@ -62,6 +62,7 @@ namespace Plattformer.Logic
                 Control.InputManager.StartWatchdog();
                 Control.MenuInputController.StartWatchdog();
                 Control.LevelInputController.StartWatchdog();
+                Control.GamePadController.StartWatchdog();
                 SetInputLayout(Control.ActiveInputLayout.MainMenu, false);
                 OpenMenu(false);
             };
@@ -76,6 +77,7 @@ namespace Plattformer.Logic
                 Control.InputManager.StopWatchdog();
                 Control.MenuInputController.StopWatchdog();
                 Control.LevelInputController.StopWatchdog();
+                Control.GamePadController.StopWatchdog();
                 UI.UIManager.Dispose();
             };
             if (async) new Task(task).Start();
