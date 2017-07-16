@@ -21,7 +21,7 @@ namespace Plattformer.Control
             var opdir = direction == PressState.PositivePressed ? PressState.NegativePressed :
                 direction == PressState.NegativePressed ? PressState.PositivePressed : PressState.None;
             var opposite = IsPressed(axis, opdir);
-            InputManager.SetAction(axis, opposite ? PressState.None : direction);
+            InputManager.SetAction(StateSource.Forms, axis, opposite ? PressState.None : direction);
         }
 
         public static void OnKeyUp(Keys key)
@@ -34,7 +34,7 @@ namespace Plattformer.Control
             var opdir = direction == PressState.PositivePressed ? PressState.NegativePressed :
                 direction == PressState.NegativePressed ? PressState.PositivePressed : PressState.None;
             var opposite = IsPressed(axis, opdir);
-            InputManager.SetAction(axis, opposite ? opdir : PressState.None);
+            InputManager.SetAction(StateSource.Forms, axis, opposite ? opdir : PressState.None);
         }
 
         static bool GetAxis(Keys key, out InputAxis axis, out PressState direction)

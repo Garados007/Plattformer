@@ -27,6 +27,8 @@ namespace Plattformer.Control
 
         public static float Epsilon = 0.1f;
 
+        public static StateSource CurrentSource { get; private set; }
+
         public static bool GetPressed(InputAxis action)
         {
             return Math.Abs(actionAxis[action]) >= Epsilon;
@@ -45,18 +47,33 @@ namespace Plattformer.Control
             return actionAxis[action];
         }
 
-        public static void SetAction(InputAxis action, bool pressed)
+        public static void SetAction(StateSource source, InputAxis action, bool pressed)
         {
+            if (source != CurrentSource)
+            {
+                if (pressed) CurrentSource = source;
+                else return;
+            }
             actionAxis[action] = pressed ? 1 : 0;
         }
 
-        public static void SetAction(InputAxis action, PressState state)
+        public static void SetAction(StateSource source, InputAxis action, PressState state)
         {
+            if (source != CurrentSource)
+            {
+                if (state != PressState.None) CurrentSource = source;
+                else return;
+            }
             actionAxis[action] = state == PressState.NegativePressed ? -1 : state == PressState.PositivePressed ? 1 : 0;
         }
 
-        public static void SetAction(InputAxis action, float value)
+        public static void SetAction(StateSource source, InputAxis action, float value)
         {
+            if (source != CurrentSource)
+            {
+                if (Math.Abs(value) >= Epsilon) CurrentSource = source;
+                else return;
+            }
             actionAxis[action] = Math.Max(-1, Math.Min(1, value));
          }
 
@@ -121,6 +138,12 @@ namespace Plattformer.Control
         None,
         PositivePressed,
         NegativePressed,
+    }
+
+    public enum StateSource
+    {
+        Forms,
+        GamePad1
     }
 
     public class InputType
