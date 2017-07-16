@@ -69,11 +69,12 @@ namespace Plattformer.UI
                     RenderFunction();
                     Buffer.Render();
                 }
-                catch
+                catch (Exception e)
                 {
                     if (Disposing || IsDisposed) break;
 #if DEBUG
-                    throw;
+                    if (!(e is ArgumentException) && e.Source != "System.Drawing")
+                        throw;
 #endif
                 }
                 var finished = Environment.TickCount;
