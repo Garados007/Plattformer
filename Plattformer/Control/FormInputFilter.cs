@@ -77,11 +77,11 @@ namespace Plattformer.Control
 #if DEBUG
                 case Keys.PageDown:
                     axis = InputAxis.Debug_Zoom;
-                    direction = PressState.NegativePressed;
+                    direction = PressState.PositivePressed;
                     return true;
                 case Keys.PageUp:
                     axis = InputAxis.Debug_Zoom;
-                    direction = PressState.PositivePressed;
+                    direction = PressState.NegativePressed;
                     return true;
 #endif
                 default: return false;
